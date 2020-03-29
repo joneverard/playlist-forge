@@ -1,9 +1,20 @@
 import React from "react";
 
+import AppHeader from "components/header/header";
+
 import styles from "./app.module.scss";
 
 function App() {
-  return <div></div>;
+  return (
+    <main className={styles.main}>
+      <AppHeader />
+      <div className={styles.container}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </main>
+  );
 }
 
 export default App;
