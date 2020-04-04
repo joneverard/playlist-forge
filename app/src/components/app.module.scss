@@ -8,17 +8,18 @@
 
 .container {
   display: flex;
-  padding: 15px;
+  padding: 30px 50px 0 50px;
   align-items: center;
   height: calc(100% - #{$header-height});
   justify-content: space-between;
-  div {
+  > div {
     flex-grow: 1;
+    flex-basis: 0;
     height: 100%;
     border: 1px dashed blue;
     &:first-of-type {
-      width: 250px;
-      flex-grow: 0;
+      // width: 400px;
+      // flex-grow: 0;
     }
   }
 }

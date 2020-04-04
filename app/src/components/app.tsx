@@ -1,6 +1,7 @@
 import React from "react";
 
 import AppHeader from "components/header/header";
+import Playlists from "components/playlists/playlists";
 
 import styles from "./app.module.scss";
 
@@ -8,8 +9,11 @@ function App() {
   return (
     <main className={styles.main}>
       <AppHeader />
+      <a href="/auth/spotify">Login with Spotify</a>
       <div className={styles.container}>
-        <div></div>
+        <div>
+          <Playlists />
+        </div>
         <div></div>
         <div></div>
       </div>

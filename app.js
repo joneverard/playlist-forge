@@ -5,6 +5,10 @@ var express = require("express"),
   swig = require("swig"),
   SpotifyStrategy = require("passport-spotify").Strategy;
 
+const axios = require("axios");
+const fs = require("fs");
+const Handlebars = require("handlebars");
+
 var consolidate = require("consolidate");
 
 // var appKey = 'bb200fb215c346448b3c34bbccaac25d';
@@ -17,6 +21,17 @@ var consolidate = require("consolidate");
 //   the user by ID when deserializing. However, since this example does not
 //   have a database of user records, the complete spotify profile is serialized
 //   and deserialized.
+// so in the future will need to set up a database of users, and store the user in there instead.
+
+var SpotifyWebApi = require("spotify-web-api-node");
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId: process.env.APP_KEY,
+  clientSecret: process.env.APP_SECRET,
+  redirectUri: "http://localhost:8888/callback"
+});
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -37,13 +52,12 @@ passport.use(
       callbackURL: "http://localhost:8888/callback"
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-      // asynchronous verification, for effect...
       process.nextTick(function() {
         // To keep the example simple, the user's spotify profile is returned to
         // represent the logged-in user. In a typical application, you would want
         // to associate the spotify account with a user record in your database,
         // and return that user instead.
-        return done(null, profile);
+        return done(null, { ...profile, accessToken, refreshToken });
       });
     }
   )
@@ -56,7 +70,7 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 app.use(
-  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+  session({ secret: "ABCD123000ZZDEF", resave: true, saveUninitialized: true })
 );
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
@@ -72,6 +86,8 @@ app.get("/", function(req, res) {
 });
 
 app.get("/account", ensureAuthenticated, function(req, res) {
+  console.log("ACCOUNT", req.session);
+  //
   res.render("account.html", { user: req.user });
 });
 
@@ -87,7 +103,7 @@ app.get("/login", function(req, res) {
 app.get(
   "/auth/spotify",
   passport.authenticate("spotify", {
-    scope: ["user-read-email", "user-read-private"],
+    scope: ["user-read-email", "user-read-private", "playlist-read-private"],
     showDialog: true
   }),
   function(req, res) {
@@ -115,8 +131,19 @@ app.get("/logout", function(req, res) {
 });
 
 app.get("/playlists", function(req, res) {
-  console.log(req.user);
-  res.status(200).send("hello");
+  console.log(req.session.passport.user.accessToken);
+  let result = {
+    playlists: []
+  };
+  spotifyApi.setAccessToken(req.session.passport.user.accessToken);
+  spotifyApi.getUserPlaylists(req.session.passport.user.id).then(data => {
+    data.body.items.forEach(item => result.playlists.push(item));
+
+    const template = Handlebars.compile(
+      fs.readFileSync("./views/playlists.hbs", "utf-8")
+    );
+    res.status(200).send(template(result));
+  });
 });
 
 app.listen(8888);
