@@ -1,3 +1,5 @@
+const fs = require("fs");
+const Handlebars = require("handlebars");
 const { ensureAuthenticated } = require("../../utils/middleware");
 
 module.exports = (app, spotifyApi) => {
