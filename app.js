@@ -7,6 +7,7 @@ var express = require("express"),
 const axios = require("axios");
 const fs = require("fs");
 const Handlebars = require("handlebars");
+const { ensureAuthenticated } = require("./server/utils/middleware");
 
 var consolidate = require("consolidate");
 
@@ -54,6 +55,7 @@ app.get("/", function(req, res) {
 });
 
 require("./server/lib/auth/auth-rest.js")(app);
+require("./server/lib/playlists/playlist-rest.js")(app, spotifyApi);
 
 app.get("/account", ensureAuthenticated, function(req, res) {
   console.log("ACCOUNT", req.session);
@@ -61,34 +63,4 @@ app.get("/account", ensureAuthenticated, function(req, res) {
   res.render("account.html", { user: req.user });
 });
 
-app.get("/playlists", function(req, res) {
-  console.log(req.session.passport.user.accessToken);
-  let result = {
-    playlists: []
-  };
-  spotifyApi.setAccessToken(req.session.passport.user.accessToken);
-  spotifyApi
-    .getUserPlaylists(req.session.passport.user.id, { limit: 50 })
-    .then(data => {
-      data.body.items.forEach(item => result.playlists.push(item));
-
-      const template = Handlebars.compile(
-        fs.readFileSync("./views/playlists.hbs", "utf-8")
-      );
-      res.status(200).send(template(result));
-    });
-});
-
 app.listen(8888);
-
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed. Otherwise, the user will be redirected to the
-//   login page.
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
