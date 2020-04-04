@@ -1,17 +1,21 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { getPlaylists } from "api/playlists";
 import styles from "./playlists.module.scss";
 
-let list: string[] = [];
-for (let i = 0; i < 100; i++) {
-  list.push(`${i}`);
-}
+const Playlists = () => {
+  const [playlists, setPlaylists] = useState([]);
 
-const Playlists = (props: any) => {
+  useEffect(() => {
+    getPlaylists().then(data => {
+      console.log(data);
+      setPlaylists(data.body.items);
+    });
+  }, []);
+
   return (
     <div className={styles.list}>
-      {list.map((i, index) => (
-        <PlaylistItem fields={[index, index + 1, index + 3].map(i => `${i}`)} />
+      {playlists.map(({ images, name, description }: Playlist) => (
+        <PlaylistItem images={images} name={name} description={description} />
       ))}
     </div>
   );
@@ -19,14 +23,26 @@ const Playlists = (props: any) => {
 
 export default Playlists;
 
-interface PlaylistProps {
-  fields: string[];
+interface Image {
+  url: string;
 }
 
-const PlaylistItem = (props: PlaylistProps) => (
-  <div className={styles.playlist}>
-    {props.fields.map((field: string) => (
-      <span>{"hello"}</span>
-    ))}
-  </div>
-);
+interface Playlist {
+  images: Image[];
+  name: string;
+  description: string;
+}
+
+const PlaylistItem = ({ images, name, description }: Playlist) => {
+  const { url: imgUrl } = images[0];
+
+  return (
+    <div className={styles.playlist}>
+      <img src={imgUrl} className={styles.playlistCover} />
+      <div className={styles.detail}>
+        <h4 className={styles.playlistName}>{name}</h4>
+        <span>{description}</span>
+      </div>
+    </div>
+  );
+};

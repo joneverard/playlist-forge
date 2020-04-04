@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "components/app";
+import axios from "axios";
 import * as serviceWorker from "./serviceWorker";
 
 import "./styles/index.scss";
+
+(window as any).axios = axios;
 
 ReactDOM.render(
   <React.StrictMode>

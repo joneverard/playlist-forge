@@ -9,7 +9,9 @@ function App() {
   return (
     <main className={styles.main}>
       <AppHeader />
-      <a href="/auth/spotify">Login with Spotify</a>
+      <a href="/auth/spotify" style={{ position: "absolute" }}>
+        Login with Spotify
+      </a>
       <div className={styles.container}>
         <div>
           <Playlists />
