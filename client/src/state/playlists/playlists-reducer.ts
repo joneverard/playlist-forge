@@ -2,14 +2,14 @@ import { combineReducers } from "redux";
 
 export const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 
-function playlists(state: any = {}, action: any) {
+export function playlists(state: any = {}, action: any) {
   switch (action.type) {
     default:
       return state;
   }
 }
 
-function selectedPlaylist(state: any = {}, action: any) {
+export function selectedPlaylist(state: any = {}, action: any) {
   switch (action.type) {
     case "SET_SELECTED_PLAYLIST":
       return action.payload;
@@ -18,4 +18,7 @@ function selectedPlaylist(state: any = {}, action: any) {
   }
 }
 
-export default combineReducers({ playlists, selectedPlaylist });
+export interface PlaylistStore {
+  selectedPlaylist: any;
+  playlists: any;
+}

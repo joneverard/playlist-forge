@@ -2,6 +2,7 @@ import React from "react";
 
 import AppHeader from "components/header/header";
 import Playlists from "components/playlists/playlists";
+import SelectedPlaylist from "components/selected-playlist/selected-playlist";
 
 import styles from "./app.module.scss";
 
@@ -13,7 +14,9 @@ function App() {
         <div>
           <Playlists />
         </div>
-        <div></div>
+        <div>
+          <SelectedPlaylist />
+        </div>
         <div></div>
       </div>
     </main>

@@ -9,6 +9,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "handlebars": "^4.7.6",
+    "lodash": "^4.17.15",
     "nodemon": "^2.0.2",
     "passport": "~0.2.0",
     "passport-spotify": "^1.1.0",

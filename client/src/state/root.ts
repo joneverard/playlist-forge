@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
 
-import playlists from "state/playlists/playlists-reducer";
+import { playlists, selectedPlaylist } from "state/playlists/playlists-reducer";
 
-export default combineReducers({ playlists });
+export interface RootState {
+  playlists: any;
+  selectedPlaylist: any;
+}
+
+export default combineReducers<RootState>({ playlists, selectedPlaylist });
