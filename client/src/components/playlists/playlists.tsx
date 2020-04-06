@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { SET_SELECTED_PLAYLIST } from "state/playlists/playlists-reducer";
 import { getPlaylists, getPlaylistTracks } from "api/playlists";
 import styles from "./playlists.module.scss";
 
 const Playlists = () => {
   const [playlists, setPlaylists] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getPlaylists().then(data => {
+    getPlaylists().then((data) => {
       console.log(data);
       setPlaylists(data.body.items);
     });
   }, []);
 
   const getTracks = (e: Event, id: string) => {
-    // console.log(e, id);
-    getPlaylistTracks(id).then(data => console.log(data));
+    getPlaylistTracks(id).then(({ body }) =>
+      dispatch({ type: SET_SELECTED_PLAYLIST, payload: body })
+    );
   };
 
   return (
@@ -51,8 +56,8 @@ const PlaylistItem = ({ images, name, tracks, onClick, id }: Playlist) => {
   const { url: imgUrl } = images[0];
 
   return (
-    <div className={styles.playlist} onClick={e => onClick(e, id)}>
-      <img src={imgUrl} className={styles.playlistCover} />
+    <div className={styles.playlist} onClick={(e) => onClick(e, id)}>
+      <img src={imgUrl} className={styles.playlistCover} alt={name} />
       <h4 className={styles.playlistName}>{name}</h4>
       <span className={styles.meta}>{tracks.total}</span>
     </div>
