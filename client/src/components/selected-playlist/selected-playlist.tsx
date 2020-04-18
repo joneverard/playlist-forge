@@ -11,6 +11,8 @@ import styles from "./selected-playlist.module.scss";
 const SelectedPlaylist = () => {
   const playlist = useSelector((state: RootState) => state.selectedPlaylist);
 
+  console.log("RENDER PLAYLIST", get(playlist, "tracks.items"));
+
   return (
     <div className={styles.playlistContainer}>
       <Tracklist tracks={get(playlist, "tracks.items", [])} />

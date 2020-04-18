@@ -39,6 +39,7 @@ const TrackItem = (props: any = { track: {} }) => {
     <div className={styles.trackItem}>
       <img className={styles.albumArt} src={track.album.images[0].url} />
       <span>{track.artists[0].name}</span>
+      <span>{" - "}</span>
       <span>{track.name}</span>
       {track.explicit && <span>EXPLICIT</span>}
     </div>

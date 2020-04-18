@@ -1,9 +1,15 @@
 .trackItem {
   display: flex;
-  width: 100%;
+  align-items: center;
   height: 60px;
+  padding: 10px;
+  color: silver;
+  > * {
+    margin-right: 5px;
+  }
   &:hover {
     background-color: rgb(71, 71, 71);
+    cursor: pointer;
   }
 }
 
