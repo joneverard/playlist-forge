@@ -1,4 +1,5 @@
 import React from "react";
+import { Checkbox } from "antd";
 
 import styles from "./tracklist.module.scss";
 
@@ -37,6 +38,7 @@ const TrackItem = (props: any = { track: {} }) => {
   const { track } = props;
   return (
     <div className={styles.trackItem}>
+      <Checkbox />
       <img className={styles.albumArt} src={track.album.images[0].url} />
       <span>{track.artists[0].name}</span>
       <span>{" - "}</span>
