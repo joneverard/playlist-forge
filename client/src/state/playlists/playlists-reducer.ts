@@ -1,5 +1,3 @@
-import { combineReducers } from "redux";
-
 export const SET_SELECTED_PLAYLIST = "SET_SELECTED_PLAYLIST";
 
 export function playlists(state: any = {}, action: any) {

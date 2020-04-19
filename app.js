@@ -30,7 +30,7 @@ var SpotifyWebApi = require("spotify-web-api-node");
 var spotifyApi = new SpotifyWebApi({
   clientId: process.env.APP_KEY,
   clientSecret: process.env.APP_SECRET,
-  redirectUri: "http://localhost:8888/callback"
+  redirectUri: "http://localhost:8888/callback",
 });
 
 var app = express();
@@ -51,14 +51,14 @@ app.use(express.static(__dirname + "/public"));
 
 app.engine("html", consolidate.swig);
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.render("index.html", { user: req.user });
 });
 
 require("./server/lib/auth/auth-rest.js")(app);
 require("./server/lib/playlists/playlist-rest.js")(app, spotifyApi);
 
-app.get("/account", ensureAuthenticated, function(req, res) {
+app.get("/account", ensureAuthenticated, function (req, res) {
   console.log("ACCOUNT", req.session);
   //
   res.render("account.html", { user: req.user });

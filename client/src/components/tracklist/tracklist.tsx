@@ -13,7 +13,6 @@ const Tracklist = ({
   tracks: Array<any>;
   onSelectTrack: Function;
 }) => {
-  console.log(tracks);
   return (
     <div className={styles.tracksContainer}>
       {tracks.map(({ track, selected }) => (
@@ -53,7 +52,11 @@ const TrackItem = (props: any = { track: {} }) => {
       <div className={styles.checkbox}>
         <Checkbox checked={selected} />
       </div>
-      <img className={styles.albumArt} src={track.album.images[0].url} />
+      <img
+        className={styles.albumArt}
+        src={track.album.images[0].url}
+        alt="album art"
+      />
       <span>{track.artists[0].name}</span>
       <span>{" - "}</span>
       <span>{track.name}</span>
