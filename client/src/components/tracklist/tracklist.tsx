@@ -38,7 +38,7 @@ const TrackItem = (props: any = { track: {} }) => {
   const { track } = props;
   return (
     <div className={styles.trackItem}>
-      <Checkbox />
+      <Checkbox className={".hello-there"} />
       <img className={styles.albumArt} src={track.album.images[0].url} />
       <span>{track.artists[0].name}</span>
       <span>{" - "}</span>

@@ -10,7 +10,8 @@ import rootReducer from "state/root";
 
 import * as serviceWorker from "./serviceWorker";
 
-import "./styles/index.less";
+import "./styles/antd.less";
+import "./styles/index.scss";
 
 (window as any).axios = axios;
 const store = createStore(rootReducer);
