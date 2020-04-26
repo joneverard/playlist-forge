@@ -5,6 +5,7 @@ import { get } from "lodash";
 import { RootState } from "state/root";
 
 import Tracklist from "components/tracklist/tracklist";
+import PlaylistHeader from "components/playlist-header/playlist-header";
 
 import styles from "./selected-playlist.module.scss";
 
@@ -14,6 +15,7 @@ const SelectedPlaylist = () => {
 
   return (
     <div className={styles.playlistContainer}>
+      <PlaylistHeader />
       <Tracklist
         tracks={get(playlist, "tracks.items", [])}
         onSelectTrack={(track: any) =>
