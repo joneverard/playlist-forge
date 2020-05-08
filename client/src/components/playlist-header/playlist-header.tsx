@@ -1,16 +1,33 @@
 import React from "react";
+import { get } from "lodash";
 import { Checkbox, Button, Select, Input } from "antd";
+
+import { SELECT_ALL, DESELECT_ALL } from "state/playlists/playlists-reducer";
 
 import styles from "./playlist-header.module.scss";
 
 const { Option } = Select;
-// what does this component need.
-// set of "actions" to place at the top.
 
-const PlaylistHeader = () => {
+const PlaylistHeader = ({ playlist, dispatch }) => {
+  const tracks = get(playlist, "tracks.items", []);
+  const allSelected = tracks.every((item) => item.selected);
+  const indeterminate = tracks.some((item) => item.selected) && !allSelected;
+
+  const onClickSelectAll = () => {
+    if (indeterminate || allSelected) {
+      dispatch({ type: DESELECT_ALL });
+    } else {
+      dispatch({ type: SELECT_ALL });
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <SelectAll onSelect={() => {}} checked={false} indeterminate={false} />
+      <SelectAll
+        onChange={onClickSelectAll}
+        checked={false}
+        indeterminate={false}
+      />
       <div>
         <SelectItems />
       </div>
@@ -38,12 +55,14 @@ const SelectItems = () => {
   );
 };
 
-const SelectAll = ({ onSelect, checked, indeterminate }) => {
-  const onClick = (e) => onSelect(e, checked, indeterminate);
-
+const SelectAll = ({ onChange, checked, indeterminate }) => {
   return (
-    <div className={styles.selectAll} onClick={onClick}>
-      <Checkbox />
+    <div className={styles.selectAll} onClick={onChange}>
+      <Checkbox
+        onChange={onChange}
+        checked={checked}
+        indeterminate={indeterminate}
+      />
       <span>{"Select all"}</span>
     </div>
   );

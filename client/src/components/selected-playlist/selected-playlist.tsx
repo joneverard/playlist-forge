@@ -15,7 +15,7 @@ const SelectedPlaylist = () => {
 
   return (
     <div className={styles.playlistContainer}>
-      <PlaylistHeader />
+      <PlaylistHeader playlist={playlist} dispatch={dispatch} />
       <Tracklist
         tracks={get(playlist, "tracks.items", [])}
         onSelectTrack={(track: any) =>
