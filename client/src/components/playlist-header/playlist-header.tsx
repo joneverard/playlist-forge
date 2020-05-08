@@ -10,10 +10,7 @@ const { Option } = Select;
 const PlaylistHeader = () => {
   return (
     <div className={styles.container}>
-      <div>
-        <Checkbox />
-        {"Select all"}
-      </div>
+      <SelectAll onSelect={() => {}} checked={false} indeterminate={false} />
       <div>
         <SelectItems />
       </div>
@@ -38,5 +35,16 @@ const SelectItems = () => {
         <Option value="Option2-2">Option2-2</Option>
       </Select>
     </Input.Group>
+  );
+};
+
+const SelectAll = ({ onSelect, checked, indeterminate }) => {
+  const onClick = (e) => onSelect(e, checked, indeterminate);
+
+  return (
+    <div className={styles.selectAll} onClick={onClick}>
+      <Checkbox />
+      <span>{"Select all"}</span>
+    </div>
   );
 };
