@@ -10,7 +10,7 @@ const { Option } = Select;
 
 const PlaylistHeader = ({ playlist, dispatch }) => {
   const tracks = get(playlist, "tracks.items", []);
-  const allSelected = tracks.every((item) => item.selected);
+  const allSelected = tracks.length && tracks.every((item) => item.selected);
   const indeterminate = tracks.some((item) => item.selected) && !allSelected;
 
   const onClickSelectAll = () => {
