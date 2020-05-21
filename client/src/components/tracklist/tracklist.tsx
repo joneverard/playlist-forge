@@ -1,5 +1,6 @@
 import React from "react";
 import { Checkbox } from "antd";
+import { get } from "lodash";
 
 import styles from "./tracklist.module.scss";
 
@@ -47,20 +48,20 @@ interface Track {
 const TrackItem = (props: any = { track: {} }) => {
   const { track, selected, onSelectTrack } = props;
 
-  return (
+  return track ? (
     <div className={styles.trackItem} onClick={() => onSelectTrack(track)}>
       <div className={styles.checkbox}>
         <Checkbox checked={selected} />
       </div>
       <img
         className={styles.albumArt}
-        src={track.album.images[0].url}
+        src={get(track, "album.images[0].url", "")}
         alt="album art"
       />
-      <span>{track.artists[0].name}</span>
+      <span>{get(track, "artists[0].name", "")}</span>
       <span>{" - "}</span>
-      <span>{track.name}</span>
-      {track.explicit && <span>EXPLICIT</span>}
+      <span>{get(track, "name", "")}</span>
+      {get(track, "explicit") && <span>EXPLICIT</span>}
     </div>
-  );
+  ) : null;
 };
