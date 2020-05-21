@@ -14,6 +14,7 @@ const PlaylistHeader = ({ playlist, dispatch }) => {
   const indeterminate = tracks.some((item) => item.selected) && !allSelected;
 
   const onClickSelectAll = () => {
+    console.log("ON CLICK", indeterminate, allSelected);
     if (indeterminate || allSelected) {
       dispatch({ type: DESELECT_ALL });
     } else {
@@ -25,8 +26,8 @@ const PlaylistHeader = ({ playlist, dispatch }) => {
     <div className={styles.container}>
       <SelectAll
         onChange={onClickSelectAll}
-        checked={false}
-        indeterminate={false}
+        checked={allSelected}
+        indeterminate={indeterminate}
       />
       <div>
         <SelectItems />

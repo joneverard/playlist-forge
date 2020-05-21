@@ -17,9 +17,10 @@ const Playlists = () => {
   }, []);
 
   const getTracks = (e: Event, id: string) => {
-    getPlaylistTracks(id).then(({ body }) =>
-      dispatch({ type: SET_SELECTED_PLAYLIST, payload: body })
-    );
+    getPlaylistTracks(id).then(({ body }) => {
+      console.log("PLAYLIST", body);
+      dispatch({ type: SET_SELECTED_PLAYLIST, payload: body });
+    });
   };
 
   return (
