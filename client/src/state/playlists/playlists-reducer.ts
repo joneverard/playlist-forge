@@ -13,6 +13,7 @@ export function playlists(state: any = {}, action: any) {
 }
 
 export function selectedPlaylist(state: any = {}, action: any) {
+  // will return the playlist type.
   const items = get(state, "tracks.items", []);
   switch (action.type) {
     case SET_SELECTED_PLAYLIST:
