@@ -25,6 +25,7 @@ const PlaylistHeader = ({ playlist, dispatch }) => {
   const onClickSave = () => {
     const selectedItems = tracks.filter((track) => track.selected);
     dispatch({ type: ADD_TRACKS, payload: selectedItems });
+    dispatch({ type: DESELECT_ALL });
   };
 
   return (

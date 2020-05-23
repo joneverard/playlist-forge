@@ -1,9 +1,16 @@
 export const ADD_TRACKS = "ADD_TRACKS";
 
-export function savedItems(state: any = [], action: any) {
+const defaultState = { tracks: [] };
+
+export function savedItems(state: any = defaultState, action: any) {
   switch (action.type) {
     case ADD_TRACKS:
-      return [...state, action.payload];
+      // reset the selected status
+      const tracks = action.payload.map((track) => ({
+        ...track,
+        selected: false,
+      }));
+      return { ...state, tracks: [...state.tracks, ...tracks] };
     default:
       return state;
   }

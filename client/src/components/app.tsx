@@ -3,6 +3,7 @@ import React from "react";
 import AppHeader from "components/header/header";
 import Playlists from "components/playlists/playlists";
 import SelectedPlaylist from "components/selected-playlist/selected-playlist";
+import SavedItems from "components/saved-items/saved-items";
 
 import styles from "./app.module.scss";
 
@@ -17,7 +18,9 @@ function App() {
         <div>
           <SelectedPlaylist />
         </div>
-        <div></div>
+        <div>
+          <SavedItems />
+        </div>
       </div>
     </main>
   );
