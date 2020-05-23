@@ -55,7 +55,7 @@ const TrackItem = (props: any = { track: {} }) => {
       </div>
       <img
         className={styles.albumArt}
-        src={get(track, "album.images[0].url", "")}
+        src={get(track, "album.images[2].url", "")}
         alt="album art"
       />
       <span>{get(track, "artists[0].name", "")}</span>
