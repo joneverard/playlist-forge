@@ -4,9 +4,10 @@ const { ensureAuthenticated } = require("../../utils/middleware");
 
 module.exports = (app, spotifyApi) => {
   // get list of playlists
-  app.get("/playlists", ensureAuthenticated, function(req, res) {
+  app.get("/playlists", ensureAuthenticated, function (req, res) {
     console.log(req.session.passport.user.accessToken);
     spotifyApi.setAccessToken(req.session.passport.user.accessToken);
+
     spotifyApi
       .getUserPlaylists(req.session.passport.user.id, { limit: 50 })
       .then(data => {
@@ -15,7 +16,7 @@ module.exports = (app, spotifyApi) => {
       });
   });
 
-  app.get("/playlist/:id", ensureAuthenticated, function(req, res) {
+  app.get("/playlist/:id", ensureAuthenticated, function (req, res) {
     spotifyApi
       .getPlaylist(req.params.id)
       .then(data => {
