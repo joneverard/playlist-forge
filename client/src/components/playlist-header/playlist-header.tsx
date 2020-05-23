@@ -3,6 +3,7 @@ import { get } from "lodash";
 import { Checkbox, Button, Select, Input } from "antd";
 
 import { SELECT_ALL, DESELECT_ALL } from "state/playlists/playlists-reducer";
+import { ADD_TRACKS } from "state/saved-items/saved-items";
 
 import styles from "./playlist-header.module.scss";
 
@@ -14,12 +15,16 @@ const PlaylistHeader = ({ playlist, dispatch }) => {
   const indeterminate = tracks.some((item) => item.selected) && !allSelected;
 
   const onClickSelectAll = () => {
-    console.log("ON CLICK", indeterminate, allSelected);
     if (indeterminate || allSelected) {
       dispatch({ type: DESELECT_ALL });
     } else {
       dispatch({ type: SELECT_ALL });
     }
+  };
+
+  const onClickSave = () => {
+    const selectedItems = tracks.filter((track) => track.selected);
+    dispatch({ type: ADD_TRACKS, payload: selectedItems });
   };
 
   return (
@@ -33,7 +38,9 @@ const PlaylistHeader = ({ playlist, dispatch }) => {
         <SelectItems />
       </div>
       <div>
-        <Button type="primary">Save</Button>
+        <Button type="primary" onClick={onClickSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

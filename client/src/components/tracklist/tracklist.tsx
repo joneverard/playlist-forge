@@ -45,6 +45,7 @@ interface Track {
   selected: boolean;
 }
 
+// TODO - when he server only sends necessary information, this will be cleaner.
 const TrackItem = (props: any = { track: {} }) => {
   const { track, selected, onSelectTrack } = props;
 
