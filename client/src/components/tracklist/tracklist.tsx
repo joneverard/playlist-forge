@@ -2,6 +2,8 @@ import React from "react";
 import { Checkbox } from "antd";
 import { get } from "lodash";
 
+import { Track } from "interfaces/tracks.interface";
+
 import styles from "./tracklist.module.scss";
 
 // TODO - the track info is nested one level deeper. there is
@@ -11,15 +13,15 @@ const Tracklist = ({
   tracks,
   onSelectTrack,
 }: {
-  tracks: Array<any>;
+  tracks: Array<Track>;
   onSelectTrack: Function;
 }) => {
   return (
     <div className={styles.tracksContainer}>
-      {tracks.map(({ selected, ...track }) => (
+      {tracks.map(track => (
         <TrackItem
           track={track}
-          selected={selected}
+          selected={track.selected}
           onSelectTrack={onSelectTrack}
         />
       ))}
@@ -28,22 +30,6 @@ const Tracklist = ({
 };
 
 export default Tracklist;
-
-interface Track {
-  name: string;
-  id: string;
-  album: {
-    images: Array<{
-      url: string;
-    }>;
-  };
-  artists: Array<{
-    name: string;
-    id: string;
-  }>;
-  explicit: boolean;
-  selected: boolean;
-}
 
 interface TrackItemProps {
   track: Track;
