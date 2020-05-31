@@ -11,14 +11,12 @@ const Playlists = () => {
 
   useEffect(() => {
     getPlaylists().then(data => {
-      console.log(data);
       setPlaylists(data.playlists);
     });
   }, []);
 
   const getTracks = (e: Event, id: string) => {
     getPlaylistTracks(id).then(data => {
-      console.log("PLAYLIST", data);
       dispatch({ type: SET_SELECTED_PLAYLIST, payload: data });
     });
   };

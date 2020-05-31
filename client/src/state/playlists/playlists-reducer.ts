@@ -23,7 +23,7 @@ export function selectedPlaylist(state: any = {}, action: any) {
       // TODO - move this logic to a map if it is not performant enough.
       const newState = { ...state };
       const track = newState.tracks.items.find(
-        (item: any) => item.track.id === action.payload.id
+        (item: any) => item.id === action.payload.id
       );
       track.selected = !track.selected;
       return newState;

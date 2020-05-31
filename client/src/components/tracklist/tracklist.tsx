@@ -14,9 +14,10 @@ const Tracklist = ({
   tracks: Array<any>;
   onSelectTrack: Function;
 }) => {
+  console.log("~ tracks", tracks);
   return (
     <div className={styles.tracksContainer}>
-      {tracks.map(({ track, selected }) => (
+      {tracks.map(({ selected, ...track }) => (
         <TrackItem
           track={track}
           selected={selected}
@@ -45,24 +46,28 @@ interface Track {
   selected: boolean;
 }
 
-// TODO - when he server only sends necessary information, this will be cleaner.
-const TrackItem = (props: any = { track: {} }) => {
+interface TrackItemProps {
+  track: Track;
+  selected: boolean;
+  onSelectTrack: Function;
+}
+const TrackItem = (props: TrackItemProps) => {
   const { track, selected, onSelectTrack } = props;
 
-  return track ? (
+  return (
     <div className={styles.trackItem} onClick={() => onSelectTrack(track)}>
       <div className={styles.checkbox}>
         <Checkbox checked={selected} />
       </div>
       <img
         className={styles.albumArt}
-        src={get(track, "album.images[2].url", "")}
-        alt="album art"
+        src={get(track, "images[2].url", "")}
+        alt={track.name}
       />
-      <span>{get(track, "artists[0].name", "")}</span>
+      <span>{get(track, "artists[0].name")}</span>
       <span>{" - "}</span>
       <span>{get(track, "name", "")}</span>
       {get(track, "explicit") && <span>EXPLICIT</span>}
     </div>
-  ) : null;
+  );
 };

@@ -32,6 +32,7 @@ module.exports = (app, spotifyApi) => {
               return {
                 ..._.pick(track.track, ["artists", "name", "duration_ms"]),
                 images: _.get(track, "track.album.images"),
+                id: track.id,
               };
             }),
             total: _.get(body, "tracks.total"),
