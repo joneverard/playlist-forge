@@ -19,8 +19,6 @@ export function selectedPlaylist(state: any = {}, action: any) {
     case SET_SELECTED_PLAYLIST:
       return action.payload;
     case SELECT_TRACK:
-      // find the track.
-      // TODO - move this logic to a map if it is not performant enough.
       const newState = { ...state };
       const track = newState.tracks.items.find(
         (item: any) => item.id === action.payload.id

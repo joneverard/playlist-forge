@@ -14,7 +14,6 @@ const Tracklist = ({
   tracks: Array<any>;
   onSelectTrack: Function;
 }) => {
-  console.log("~ tracks", tracks);
   return (
     <div className={styles.tracksContainer}>
       {tracks.map(({ selected, ...track }) => (
