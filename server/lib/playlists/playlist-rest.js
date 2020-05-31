@@ -1,5 +1,3 @@
-const fs = require("fs");
-const Handlebars = require("handlebars");
 const { ensureAuthenticated } = require("../../utils/middleware");
 
 const _ = require("lodash");
@@ -18,7 +16,6 @@ module.exports = (app, spotifyApi) => {
             _.pick(item, ["id", "name", "tracks", "description", "images"])
           ),
         };
-        console.log(result);
         res.status(200).send(result);
       });
   });
@@ -26,8 +23,22 @@ module.exports = (app, spotifyApi) => {
   app.get("/playlist/:id", ensureAuthenticated, function (req, res) {
     spotifyApi
       .getPlaylist(req.params.id)
-      .then(data => {
-        res.status(200).send(data);
+      .then(({ body }) => {
+        const result = {
+          ..._.pick(body, ["id"]),
+          tracks: {
+            items: _.map(body.tracks.items, track => {
+              if (!_.has(track, "track")) return;
+              return {
+                ..._.pick(track.track, ["artists", "name", "duration_ms"]),
+                images: _.get(track, "track.album.images"),
+              };
+            }),
+            total: _.get(body, "tracks.total"),
+          },
+        };
+
+        res.status(200).send(result);
       })
       .catch(e => {
         res.sendStatus(400);

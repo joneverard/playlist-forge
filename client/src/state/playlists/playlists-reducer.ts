@@ -17,14 +17,7 @@ export function selectedPlaylist(state: any = {}, action: any) {
   const items = get(state, "tracks.items", []);
   switch (action.type) {
     case SET_SELECTED_PLAYLIST:
-      const ret = pick(action.payload, [
-        "id",
-        "tracks.items",
-        "tracks.offset",
-        "tracks.limit",
-        "tracks.total",
-      ]);
-      return ret;
+      return action.payload;
     case SELECT_TRACK:
       // find the track.
       // TODO - move this logic to a map if it is not performant enough.
@@ -39,7 +32,7 @@ export function selectedPlaylist(state: any = {}, action: any) {
         ...state,
         tracks: {
           ...state.tracks,
-          items: items.map((track) => ({ ...track, selected: true })),
+          items: items.map(track => ({ ...track, selected: true })),
         },
       };
     case DESELECT_ALL:
@@ -47,7 +40,7 @@ export function selectedPlaylist(state: any = {}, action: any) {
         ...state,
         tracks: {
           ...state.tracks,
-          items: items.map((track) => ({ ...track, selected: false })),
+          items: items.map(track => ({ ...track, selected: false })),
         },
       };
     default:
