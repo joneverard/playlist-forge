@@ -30,7 +30,12 @@ module.exports = (app, spotifyApi) => {
             items: _.map(body.tracks.items, ({ track }) => {
               if (!_.has(track, "track")) return;
               return {
-                ..._.pick(track, ["artists", "name", "duration_ms"]),
+                ..._.pick(track, [
+                  "artists",
+                  "name",
+                  "duration_ms",
+                  "explicit",
+                ]),
                 images: _.get(track, "album.images"),
                 id: track.id,
               };

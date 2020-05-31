@@ -13,8 +13,6 @@ const SelectedPlaylist = () => {
   const playlist = useSelector((state: RootState) => state.selectedPlaylist);
   const dispatch = useDispatch();
 
-  console.log("~ playlist here", playlist);
-
   return (
     <div className={styles.playlistContainer}>
       <PlaylistHeader playlist={playlist} dispatch={dispatch} />
