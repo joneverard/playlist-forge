@@ -10,9 +10,9 @@ const Playlists = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPlaylists().then((data) => {
+    getPlaylists().then(data => {
       console.log(data);
-      setPlaylists(data.body.items);
+      setPlaylists(data.playlists);
     });
   }, []);
 
@@ -57,7 +57,7 @@ const PlaylistItem = ({ images, name, tracks, onClick, id }: Playlist) => {
   const { url: imgUrl } = images[0];
 
   return (
-    <div className={styles.playlist} onClick={(e) => onClick(e, id)}>
+    <div className={styles.playlist} onClick={e => onClick(e, id)}>
       <img src={imgUrl} className={styles.playlistCover} alt={name} />
       <h4 className={styles.playlistName}>{name}</h4>
       <span className={styles.meta}>{tracks.total}</span>
